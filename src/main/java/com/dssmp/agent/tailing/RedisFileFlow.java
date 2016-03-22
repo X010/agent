@@ -1,6 +1,13 @@
 package com.dssmp.agent.tailing;
 
+import com.dssmp.agent.AgentContext;
+import com.dssmp.agent.config.Configuration;
+import com.dssmp.agent.tailing.checkpoints.FileCheckpointStore;
+import com.google.common.collect.Range;
 import lombok.ToString;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -20,5 +27,129 @@ import lombok.ToString;
  * limitations under the License.
  */
 @ToString(callSuper = true)
-public class RedisFileFlow {
+public class RedisFileFlow extends FileFlow<KinesisRecord>  {
+
+    protected RedisFileFlow(AgentContext context, Configuration config) {
+        super(context, config);
+    }
+
+    @Override
+    public String getId() {
+        return null;
+    }
+
+    @Override
+    public String getDestination() {
+        return null;
+    }
+
+    @Override
+    public int getMaxRecordSizeBytes() {
+        return 0;
+    }
+
+    @Override
+    public int getPerRecordOverheadBytes() {
+        return 0;
+    }
+
+    @Override
+    public int getPerBufferOverheadBytes() {
+        return 0;
+    }
+
+    @Override
+    protected FileTailer<KinesisRecord> createNewTailer(FileCheckpointStore checkpoints, ExecutorService sendingExecutor) throws IOException {
+        return null;
+    }
+
+    @Override
+    protected AsyncPublisherService<KinesisRecord> getPublisher(FileCheckpointStore checkpoints, ExecutorService sendingExecutor) {
+        return null;
+    }
+
+    @Override
+    protected SourceFileTracker buildSourceFileTracker() throws IOException {
+        return null;
+    }
+
+    @Override
+    protected IParser<KinesisRecord> buildParser() {
+        return null;
+    }
+
+    @Override
+    protected ISender<KinesisRecord> buildSender() {
+        return null;
+    }
+
+    @Override
+    public int getParserBufferSize() {
+        return 0;
+    }
+
+    @Override
+    protected Range<Long> getWaitOnEmptyPublishQueueMillisValidRange() {
+        return null;
+    }
+
+    @Override
+    protected long getDefaultWaitOnEmptyPublishQueueMillis() {
+        return 0;
+    }
+
+    @Override
+    protected Range<Long> getWaitOnPublishQueueMillisValidRange() {
+        return null;
+    }
+
+    @Override
+    protected long getDefaultWaitOnPublishQueueMillis() {
+        return 0;
+    }
+
+    @Override
+    protected Range<Integer> getMaxBufferSizeBytesValidRange() {
+        return null;
+    }
+
+    @Override
+    protected int getDefaultMaxBufferSizeBytes() {
+        return 0;
+    }
+
+    @Override
+    protected Range<Integer> getBufferSizeRecordsValidRange() {
+        return null;
+    }
+
+    @Override
+    protected int getDefaultBufferSizeRecords() {
+        return 0;
+    }
+
+    @Override
+    protected Range<Long> getMaxBufferAgeMillisValidRange() {
+        return null;
+    }
+
+    @Override
+    protected long getDefaultMaxBufferAgeMillis() {
+        return 0;
+    }
+
+    @Override
+    protected long getDefaultRetryInitialBackoffMillis() {
+        return 0;
+    }
+
+    @Override
+    protected long getDefaultRetryMaxBackoffMillis() {
+        return 0;
+    }
+
+    @Override
+    protected int getDefaultPublishQueueCapacity() {
+        return 0;
+    }
 }

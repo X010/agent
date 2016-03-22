@@ -5,13 +5,9 @@
 
   "flows": [
     {
-      "filePattern": "/tmp/app.log*",
+      "filePattern": "/Users/jeffrey/Documents/opensource/agent/logs/agent.log*",
       "kinesisStream": "yourkinesisstream",
       "partitionKeyOption": "RANDOM"
-    },
-    {
-      "filePattern": "/tmp/app.log*",
-      "deliveryStream": "yourdeliverystream"
     }
   ]
 }

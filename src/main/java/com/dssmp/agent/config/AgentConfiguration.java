@@ -169,7 +169,6 @@ public class AgentConfiguration extends Configuration {
         return this.readString("cloudwatch." + ENDPOINT_KEY, null);
     }
 
-
     public int maxConnections() {
         return readInteger("maxConnections", defaultMaxConnections());
     }
