@@ -35,6 +35,7 @@ public class Application extends AbstractIdleService implements IHeartbeatProvid
     private static volatile boolean dontShutdownOnExit = false;
 
     public static void main(String[] args) throws Exception {
+        args =new String[] {"-c", "/Users/jeffrey/Documents/opensource/agent/configuration/agent.json"};
         AgentOptions opts = AgentOptions.parse(args);
         String configFile = opts.getConfigFile();
         AgentConfiguration config = tryReadConfigurationFile(Paths.get(opts.getConfigFile()));

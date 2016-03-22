@@ -50,7 +50,7 @@ public class AgentOptions {
     public static AgentOptions parse(String[] args) {
         AgentOptions opts = new AgentOptions();
         JCommander jc = new JCommander(opts);
-        jc.setProgramName("aws-kinesis-agent");
+        jc.setProgramName("agent");
         try {
             jc.parse(args);
         } catch (ParameterException e) {

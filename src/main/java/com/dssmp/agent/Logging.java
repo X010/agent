@@ -108,7 +108,7 @@ public class Logging {
 
     public synchronized static void initialize(Path logFile, String logLevel, int maxBackupIndex, long maxFileSize)
             throws Exception {
-        initialize("custom.log4j.xml", logFile, logLevel, maxBackupIndex, maxFileSize);
+        initialize("/custom.log4j.xml", logFile, logLevel, maxBackupIndex, maxFileSize);
     }
 
     public synchronized static void initialize(String config, Path logFile, String logLevel, int maxBackupIndex,
