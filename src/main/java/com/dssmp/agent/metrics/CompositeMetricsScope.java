@@ -1,5 +1,10 @@
 package com.dssmp.agent.metrics;
 
+import com.amazonaws.services.cloudwatch.model.Dimension;
+import com.amazonaws.services.cloudwatch.model.StandardUnit;
+
+import java.util.*;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +22,49 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class CompositeMetricsScope {
+public class CompositeMetricsScope extends AbstractMetricsScope {
+    private final List<IMetricsScope> scopes;
+
+    /**
+     * @param scopes
+     */
+    public CompositeMetricsScope(IMetricsScope... scopes) {
+        this(Arrays.asList(scopes));
+    }
+
+    /**
+     * @param scopes
+     */
+    public CompositeMetricsScope(Collection<IMetricsScope> scopes) {
+        this.scopes = new ArrayList<>(scopes);
+    }
+
+    @Override
+    protected void realAddData(String name, double value, StandardUnit unit) {
+        for(IMetricsScope scope : this.scopes)
+            scope.addData(name, value, unit);
+    }
+
+    @Override
+    protected void realAddDimension(String name, String value) {
+        for(IMetricsScope scope : this.scopes)
+            scope.addDimension(name, value);
+    }
+
+    @Override
+    protected void realCommit() {
+        for(IMetricsScope scope : this.scopes)
+            scope.commit();
+    }
+
+    @Override
+    protected void realCancel() {
+        for(IMetricsScope scope : this.scopes)
+            scope.cancel();
+    }
+
+    @Override
+    protected Set<Dimension> realGetDimensions() {
+        return scopes.isEmpty() ? Collections.<Dimension> emptySet() : scopes.get(0).getDimensions();
+    }
 }

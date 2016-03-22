@@ -17,5 +17,10 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class NullMetricsFactory {
+public class NullMetricsFactory implements IMetricsFactory {
+    @Override
+    public IMetricsScope createScope() {
+        return new NullMetricsScope();
+    }
 }
+

@@ -1,5 +1,7 @@
 package com.dssmp.agent.metrics;
 
+import java.util.List;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +19,14 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ICWMetricsPublisher {
+public interface ICWMetricsPublisher<KeyType> {
+
+    /**
+     * Given a list of MetricDatumWithKey, this method extracts the MetricDatum from each
+     * MetricDatumWithKey and publishes those datums.
+     *
+     * @param dataToPublish a list containing all the MetricDatums to publish
+     */
+
+    public void publishMetrics(List<MetricDatumWithKey<KeyType>> dataToPublish);
 }

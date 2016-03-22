@@ -1,5 +1,11 @@
 package com.dssmp.agent.metrics;
 
+import com.amazonaws.services.cloudwatch.model.Dimension;
+import com.amazonaws.services.cloudwatch.model.MetricDatum;
+
+import java.util.List;
+import java.util.Objects;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,4 +24,32 @@ package com.dssmp.agent.metrics;
  * limitations under the License.
  */
 public class CWMetricKey {
+    private List<Dimension> dimensions;
+    private String metricName;
+
+    /**
+     * @param datum data point
+     */
+
+    public CWMetricKey(MetricDatum datum) {
+        this.dimensions = datum.getDimensions();
+        this.metricName = datum.getMetricName();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dimensions, metricName);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CWMetricKey other = (CWMetricKey) obj;
+        return Objects.equals(other.dimensions, dimensions) && Objects.equals(other.metricName, metricName);
+    }
 }

@@ -1,5 +1,10 @@
 package com.dssmp.agent.metrics;
 
+import com.amazonaws.services.cloudwatch.model.Dimension;
+
+import java.util.Collections;
+import java.util.Set;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +22,9 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class NullMetricsScope {
+public class NullMetricsScope extends AbstractMetricsScope {
+    @Override
+    protected Set<Dimension> realGetDimensions() {
+        return Collections.emptySet();
+    }
 }

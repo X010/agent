@@ -25,8 +25,7 @@ import org.slf4j.Logger;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class  AgentAWSCredentialsProvider implements AWSCredentialsProvider {
-
+public class AgentAWSCredentialsProvider implements AWSCredentialsProvider {
 
     private static final Logger LOGGER = Logging.getLogger(AgentAWSCredentialsProvider.class);
     private final AgentConfiguration config;
@@ -49,7 +48,8 @@ public class  AgentAWSCredentialsProvider implements AWSCredentialsProvider {
                 " " + (Strings.isNullOrEmpty(secretKey) ? AgentConfiguration.CONFIG_SECRET_KEY : ""));
     }
 
-    public void refresh() {}
+    public void refresh() {
+    }
 
     @Override
     public String toString() {

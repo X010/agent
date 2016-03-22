@@ -1,5 +1,7 @@
 package com.dssmp.agent.config;
 
+import com.google.common.base.Function;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +19,15 @@ package com.dssmp.agent.config;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class StringConverterWrapper {
+public class StringConverterWrapper<T> implements Function<Object, T> {
+    private final Function<String, T> delegate;
+
+    public StringConverterWrapper(Function<String, T> delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    public T apply(Object input) {
+        return input != null ? this.delegate.apply(input.toString()) : null;
+    }
 }

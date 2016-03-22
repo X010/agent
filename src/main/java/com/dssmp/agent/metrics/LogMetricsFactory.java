@@ -17,5 +17,11 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class LogMetricsFactory {
+public class LogMetricsFactory implements IMetricsFactory {
+
+    @Override
+    public LogMetricsScope createScope() {
+        return new LogMetricsScope();
+    }
+
 }

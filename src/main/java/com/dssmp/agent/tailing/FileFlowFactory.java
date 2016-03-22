@@ -1,5 +1,9 @@
 package com.dssmp.agent.tailing;
 
+import com.dssmp.agent.AgentContext;
+import com.dssmp.agent.config.Configuration;
+import com.dssmp.agent.config.ConfigurationException;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,4 +22,28 @@ package com.dssmp.agent.tailing;
  * limitations under the License.
  */
 public class FileFlowFactory {
+    /**
+     *
+     * @param config
+     * @return
+     * @throws ConfigurationException If the configuration does not correspond
+     *         to a known {@link FileFlow} type.
+     */
+    public FileFlow<?> getFileFlow(AgentContext context, Configuration config) throws ConfigurationException {
+        if(config.containsKey(FirehoseConstants.DESTINATION_KEY)) {
+            return getFirehoseFileflow(context, config);
+        }
+        if(config.containsKey(KinesisConstants.DESTINATION_KEY)) {
+            return getKinesisFileflow(context, config);
+        }
+        throw new ConfigurationException("Could not create flow from the given configuration. Could not recognize flow type.");
+    }
+
+    protected FirehoseFileFlow getFirehoseFileflow(AgentContext context, Configuration config) {
+        return new FirehoseFileFlow(context, config);
+    }
+
+    protected KinesisFileFlow getKinesisFileflow(AgentContext context, Configuration config) {
+        return new KinesisFileFlow(context, config);
+    }
 }

@@ -1,5 +1,12 @@
 package com.dssmp.agent.config;
 
+import com.google.common.base.Function;
+
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +24,17 @@ package com.dssmp.agent.config;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class PathConverter {
+public class PathConverter implements Function<Object, Path> {
+
+
+    @Override
+    public Path apply(Object input) {
+        if (input != null && !(input instanceof Path)) {
+            if (input instanceof URI)
+                return Paths.get((URI) input);
+            else
+                return Paths.get(input.toString());
+        } else
+            return (Path) input;
+    }
 }

@@ -17,5 +17,9 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class IMetricsContext {
+public interface IMetricsContext {
+    /**
+     * @return An instance of {@link IMetricsScope}.
+     */
+    public abstract IMetricsScope beginScope();
 }

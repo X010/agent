@@ -18,4 +18,6 @@ package com.dssmp.agent.config;
  * limitations under the License.
  */
 public class ClientConfiguration {
+
+
 }

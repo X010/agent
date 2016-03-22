@@ -1,5 +1,9 @@
 package com.dssmp.agent.tailing;
 
+import com.dssmp.agent.ByteBuffers;
+
+import java.nio.ByteBuffer;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +21,13 @@ package com.dssmp.agent.tailing;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class SingleLineSplitter {
+public class SingleLineSplitter implements ISplitter {
+    public static final char LINE_DELIMITER = '\n';
+
+    @Override
+    public int locateNextRecord(ByteBuffer buffer) {
+        // TODO: Skip empty records, commented records, header lines, etc...
+        //       (based on FileFlow configuration?).
+        return ByteBuffers.advanceBufferToNextLine(buffer);
+    }
 }

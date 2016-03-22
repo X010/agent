@@ -1,5 +1,7 @@
 package com.dssmp.agent.tailing;
 
+import com.dssmp.agent.Constants;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +19,15 @@ package com.dssmp.agent.tailing;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class FirehoseConstants {
+public class FirehoseConstants extends Constants {
+    public static final String DESTINATION_KEY = "deliveryStream";
+
+    public static final int PER_RECORD_OVERHEAD_BYTES = 0;
+    public static final int MAX_RECORD_SIZE_BYTES = 40_960;
+    public static final int PER_BUFFER_OVERHEAD_BYTES = 0;
+    public static final int MAX_BATCH_PUT_SIZE_RECORDS = 500;
+    public static final int MAX_BATCH_PUT_SIZE_BYTES = 4 * 1024 * 1024;
+    public static final int MAX_BUFFER_SIZE_RECORDS = MAX_BATCH_PUT_SIZE_RECORDS;
+    public static final int MAX_BUFFER_SIZE_BYTES = MAX_BATCH_PUT_SIZE_BYTES;
+    public static final int DEFAULT_PARSER_BUFFER_SIZE_BYTES = MAX_BATCH_PUT_SIZE_BYTES;
 }

@@ -17,5 +17,13 @@ package com.dssmp.agent.config;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ConfigurationException {
+public class ConfigurationException extends RuntimeException {
+
+    public ConfigurationException(String message) {
+        super(message);
+    }
+
+    public ConfigurationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

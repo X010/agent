@@ -1,5 +1,12 @@
 package com.dssmp.agent.tailing.checkpoints;
 
+import com.dssmp.agent.tailing.FileFlow;
+import com.dssmp.agent.tailing.TrackedFile;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +24,39 @@ package com.dssmp.agent.tailing.checkpoints;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class FileCheckpointStore {
+public interface FileCheckpointStore {
+
+
+    /**
+     * Creates or updates the checkpoint for the given file.
+     *
+     * @param file
+     * @param offset
+     * @return The checkpoint that was just created/updated.
+     */
+    public FileCheckpoint saveCheckpoint(TrackedFile file, long offset);
+
+    /**
+     * @param flow
+     * @param p
+     * @return The checkpoint for the given path in the given flow, or
+     * {@code null} if the flow/path combination has no checkpoints in
+     * the store.
+     */
+    public FileCheckpoint getCheckpointForPath(FileFlow<?> flow, Path p);
+
+    /**
+     * @param flow
+     * @return The latest checkpoint for the given flow if any, or {@code null}
+     * if the flow has no checkpoints in the store.
+     */
+    public FileCheckpoint getCheckpointForFlow(FileFlow<?> flow);
+
+    /**
+     * Cleans up any resources used up by this store.
+     */
+    public void close();
+
+
+    public List<Map<String, Object>> dumpCheckpoints();
 }

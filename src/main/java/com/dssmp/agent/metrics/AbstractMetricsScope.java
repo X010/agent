@@ -1,5 +1,11 @@
 package com.dssmp.agent.metrics;
 
+import com.amazonaws.services.cloudwatch.model.Dimension;
+import com.amazonaws.services.cloudwatch.model.StandardUnit;
+import com.google.common.base.Preconditions;
+
+import java.util.Set;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +23,84 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class AbstractMetricsScope {
+public abstract class AbstractMetricsScope implements IMetricsScope {
+    private boolean closed = false;
+
+    /**
+     * Adds data points to the scope {@link IMetricsScope}.
+     * Multiple calls to this method with the same name will have their data
+     * accumulated.
+     *
+     * @see IMetricsScope#addData(String, double, StandardUnit)
+     */
+    @Override
+    public final void addData(String name, double value, StandardUnit unit) {
+        Preconditions.checkState(!closed, "Scope is already closed.");
+        realAddData(name, value, unit);
+    }
+
+    protected void realAddData(String name, double value, StandardUnit unit) {
+    }
+
+    @Override
+    public void addCount(String name, long amount) {
+        addData(name, amount, StandardUnit.Count);
+    }
+
+    @Override
+    public void addTimeMillis(String name, long duration) {
+        addData(name, duration, StandardUnit.Milliseconds);
+    }
+
+    @Override
+    public final void addDimension(String name, String value) {
+        Preconditions.checkState(!closed, "Scope is already closed.");
+        realAddDimension(name, value);
+    }
+
+    protected void realAddDimension(String name, String value) {
+    }
+
+    @Override
+    public final void commit() {
+        Preconditions.checkState(!closed, "Scope is already closed.");
+        try {
+            realCommit();
+        } finally {
+            closed = true;
+        }
+    }
+
+    @Override
+    public final void cancel() {
+        Preconditions.checkState(!closed, "Scope is already closed.");
+        try {
+            realCancel();
+        } finally {
+            closed = true;
+        }
+    }
+
+    protected void realCancel() {
+    }
+
+    protected void realCommit() {
+    }
+
+    @Override
+    public boolean closed() {
+        return closed;
+    }
+
+    /**
+     * @return a set of dimensions for an IMetricsScope
+     */
+    @Override
+    public Set<Dimension> getDimensions() {
+        Preconditions.checkState(!closed, "Scope is already closed.");
+        return realGetDimensions();
+    }
+
+    protected abstract Set<Dimension> realGetDimensions();
 }
+

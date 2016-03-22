@@ -1,5 +1,9 @@
 package com.dssmp.agent.config;
 
+import com.google.common.base.Function;
+
+import java.util.Map;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +21,15 @@ package com.dssmp.agent.config;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ConfigurationConverter {
+public class ConfigurationConverter implements Function<Object, Configuration> {
+    @Override
+    public Configuration apply(Object input) {
+        if (input != null && !(input instanceof Configuration)) {
+            if (input instanceof Map)
+                return new Configuration((Map<String, Object>) input);
+            else
+                throw new ConfigurationException("Value is not a valid map: " + input.toString());
+        } else
+            return (Configuration) input;
+    }
 }

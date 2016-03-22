@@ -1,5 +1,7 @@
 package com.dssmp.agent.tailing;
 
+import java.nio.ByteBuffer;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +19,23 @@ package com.dssmp.agent.tailing;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class FirehoseRecord {
+public class FirehoseRecord extends AbstractRecord {
+
+    public FirehoseRecord(TrackedFile file, long offset, ByteBuffer data) {
+        super(file, offset, data);
+    }
+
+    public FirehoseRecord(TrackedFile file, long offset, byte[] data) {
+        super(file, offset, data);
+    }
+
+    @Override
+    public long lengthWithOverhead() {
+        return length() + FirehoseConstants.PER_RECORD_OVERHEAD_BYTES;
+    }
+
+    @Override
+    protected int getMaxDataSize() {
+        return FirehoseConstants.MAX_RECORD_SIZE_BYTES;
+    }
 }

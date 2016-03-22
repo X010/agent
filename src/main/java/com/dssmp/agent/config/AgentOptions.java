@@ -120,4 +120,36 @@ public class AgentOptions {
         }
 
     }
+
+    public String getConfigFile() {
+        return configFile;
+    }
+
+    public void setConfigFile(String configFile) {
+        this.configFile = configFile;
+    }
+
+    public String getLogFile() {
+        return logFile;
+    }
+
+    public void setLogFile(String logFile) {
+        this.logFile = logFile;
+    }
+
+    public String getLogLevel() {
+        return logLevel;
+    }
+
+    public void setLogLevel(String logLevel) {
+        this.logLevel = logLevel;
+    }
+
+    public Boolean getHelp() {
+        return help;
+    }
+
+    public void setHelp(Boolean help) {
+        this.help = help;
+    }
 }

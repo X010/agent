@@ -1,5 +1,7 @@
 package com.dssmp.agent;
 
+import org.apache.log4j.PatternLayout;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +19,9 @@ package com.dssmp.agent;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class CustomLog4jFallbackPatterLayout {
+public class CustomLog4jFallbackPatterLayout extends PatternLayout {
+
+    public String getHeader() {
+        return CustomLog4jFallbackErrorHandler.getErrorHeader();
+    }
 }

@@ -1,5 +1,8 @@
 package com.dssmp.agent.tailing;
 
+import com.dssmp.agent.Logging;
+import org.slf4j.Logger;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,5 +20,27 @@ package com.dssmp.agent.tailing;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class AbstractSender {
+public abstract class AbstractSender<R extends IRecord> implements ISender<R> {
+    protected final Logger logger;
+
+    public AbstractSender() {
+        this.logger = Logging.getLogger(getClass());
+    }
+
+    @Override
+    public BufferSendResult<R> sendBuffer(RecordBuffer<R> buffer) {
+        if (getMaxSendBatchSizeRecords() > 0 && buffer.sizeRecords() > getMaxSendBatchSizeRecords()) {
+            throw new IllegalArgumentException("Buffer is too large for service call: " + buffer.sizeRecords() + " records vs. allowed maximum of " + getMaxSendBatchSizeRecords());
+        }
+        if (getMaxSendBatchSizeBytes() > 0 && buffer.sizeBytesWithOverhead() > getMaxSendBatchSizeBytes()) {
+            throw new IllegalArgumentException("Buffer is too large for service call: " + buffer.sizeBytesWithOverhead() + " bytes vs. allowed maximum of " + getMaxSendBatchSizeBytes());
+        }
+        return attemptSend(buffer);
+    }
+
+    protected abstract long getMaxSendBatchSizeBytes();
+
+    protected abstract int getMaxSendBatchSizeRecords();
+
+    protected abstract BufferSendResult<R> attemptSend(RecordBuffer<R> buffer);
 }

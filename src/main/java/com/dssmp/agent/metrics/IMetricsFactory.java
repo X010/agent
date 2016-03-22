@@ -17,5 +17,11 @@ package com.dssmp.agent.metrics;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class IMetricsFactory {
+public interface IMetricsFactory {
+
+    /**
+     * @return a new {@link IMetricsScope} object of the type constructed by
+     * this factory.
+     */
+    public IMetricsScope createScope();
 }
